@@ -13,6 +13,9 @@ APPLY_SCRIPTS_FOLDER = "scripts/apply"
 LOGS_FOLDER = "logs"
 
 if __name__ == "__main__":
+    if not os.path.exists(APPLY_SCRIPTS_FOLDER):
+        os.makedirs(APPLY_SCRIPTS_FOLDER)
+
     if not os.path.exists(LOGS_FOLDER):
         os.makedirs(LOGS_FOLDER)
 
