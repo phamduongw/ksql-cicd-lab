@@ -1,0 +1,7 @@
+{
+  "black-formatter.interpreter": ["/bin/python3.11"],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "editor.formatOnSave": true
+}
