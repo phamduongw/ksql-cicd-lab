@@ -1,18 +1,14 @@
 import requests
 import json
 
-from utils import getBase64Credentials
+from utils import get_base64_credentials
 
 
 def apply(url, username, password, script):
     headers = {
-        "Authorization": f"Basic {getBase64Credentials(username, password)}",
+        "Authorization": f"Basic {get_base64_credentials(username, password)}",
         "Content-Type": "application/json",
     }
-
-    query = {"ksql": script}
-
-    payload = json.dumps(query)
-
+    payload = json.dumps({"ksql": script})
     response = requests.post(url, headers=headers, data=payload)
     return response.json()

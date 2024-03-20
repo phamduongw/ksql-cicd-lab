@@ -7,7 +7,7 @@ def read_file_content(path):
         return file.read()
 
 
-def getBase64Credentials(username, password):
+def get_base64_credentials(username, password):
     credentials = f"{username}:{password}"
     credentials_bytes = credentials.encode("utf-8")
     base64_credentials = base64.b64encode(credentials_bytes).decode("utf-8")

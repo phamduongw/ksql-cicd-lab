@@ -12,7 +12,7 @@ KSQLDB_PASSWORD = sys.argv[3]
 LOGS_FOLDER = sys.argv[4]
 DIFF_FILENAMES = sys.argv[5].split("\n")
 
-SCRIPT_FILENAMES_PATTERN = r"^scripts\/\w+\.sql$"
+SCRIPT_FILENAMES_PATTERN = r"^scripts\/.+\.sql$"
 
 if __name__ == "__main__":
     # Log configuration
