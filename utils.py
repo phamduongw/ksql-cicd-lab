@@ -7,15 +7,6 @@ def read_file_content(path):
         return file.read()
 
 
-def list_filenames(path):
-    return os.listdir(path)
-
-
-def write_to_file(path, content):
-    with open(path, "a") as file:
-        file.write(content + "\n")
-
-
 def getBase64Credentials(username, password):
     credentials = f"{username}:{password}"
     credentials_bytes = credentials.encode("utf-8")
