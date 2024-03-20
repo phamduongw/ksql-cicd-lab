@@ -1,23 +1,19 @@
-import os
 import re
 import sys
 import logging
-
+from pathlib import Path
 from utils import read_file_content
 from services import apply
 
-KSQLDB_URL = sys.argv[1]
-KSQLDB_USERNAME = sys.argv[2]
-KSQLDB_PASSWORD = sys.argv[3]
-LOGS_FOLDER = sys.argv[4]
-DIFF_FILENAMES = sys.argv[5].split("\n")
-
+KSQLDB_URL, KSQLDB_USERNAME, KSQLDB_PASSWORD, LOGS_FOLDER, *DIFF_FILENAMES = sys.argv[
+    1:
+]
 SCRIPT_FILENAMES_PATTERN = r"^scripts\/.+\.sql$"
 
-if __name__ == "__main__":
+
+def main():
     # Log configuration
-    if not os.path.exists(LOGS_FOLDER):
-        os.makedirs(LOGS_FOLDER)
+    Path(LOGS_FOLDER).mkdir(parents=True, exist_ok=True)
     logging.basicConfig(
         filename=f"{LOGS_FOLDER}/ksql.log",
         level=logging.INFO,
@@ -27,18 +23,19 @@ if __name__ == "__main__":
     # Filter the changed script and apply to ksqlDB
     for filename in DIFF_FILENAMES:
         if re.match(SCRIPT_FILENAMES_PATTERN, filename):
-            script = read_file_content(filename)
-
             response = apply(
                 KSQLDB_URL,
                 KSQLDB_USERNAME,
                 KSQLDB_PASSWORD,
-                script,
+                read_file_content(filename),
             )
 
-            if type(response) == list:
+            if isinstance(response, list):
                 for item in response:
                     logging.info(item["commandStatus"]["message"])
-
-            elif type(response) == dict:
+            elif isinstance(response, dict):
                 logging.error(response["message"])
+
+
+if __name__ == "__main__":
+    main()
